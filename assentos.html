@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Seleção de Assentos</title>
+  <link rel="stylesheet" href="stylo.css" />
+</head>
+<body>
+  <h1>Selecione seus assentos</h1>
+
+  <div class="sala-cinema">
+    <!-- Geraremos 5 fileiras com 8 assentos cada -->
+    <div class="fileira">
+      <button class="assento livre">A1</button>
+      <button class="assento livre">A2</button>
+      <button class="assento ocupado">A3</button>
+      <button class="assento livre">A4</button>
+      <button class="assento livre">A5</button>
+      <button class="assento livre">A6</button>
+      <button class="assento ocupado">A7</button>
+      <button class="assento livre">A8</button>
+    </div>
+    <div class="fileira">
+      <button class="assento livre">B1</button>
+      <button class="assento ocupado">B2</button>
+      <button class="assento livre">B3</button>
+      <button class="assento livre">B4</button>
+      <button class="assento livre">B5</button>
+      <button class="assento livre">B6</button>
+      <button class="assento livre">B7</button>
+      <button class="assento ocupado">B8</button>
+    </div>
+    <!-- Adicione mais fileiras se quiser -->
+  </div>
+
+  <button onclick="confirmarAssentos()">Continuar</button>
+
+  <script>
+    const assentos = document.querySelectorAll(".assento.livre");
+
+    assentos.forEach(btn => {
+      btn.addEventListener("click", () => {
+        btn.classList.toggle("selecionado");
+      });
+    });
+
+    function confirmarAssentos() {
+      const selecionados = document.querySelectorAll(".assento.selecionado");
+      if (selecionados.length === 0) {
+        alert("Selecione pelo menos um assento!");
+        return;
+      }
+
+      const assentosEscolhidos = Array.from(selecionados).map(btn => btn.innerText);
+      sessionStorage.setItem("assentosSelecionados", JSON.stringify(assentosEscolhidos));
+      window.location.href = "combos.html";
+    }
+  </script>
+</body>
+</html>

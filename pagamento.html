@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pagamento</title>
+  <link rel="stylesheet" href="stylo.css" />
+</head>
+<body>
+  <h1>Pagamento</h1>
+
+  <form id="form-pagamento" onsubmit="processarPagamento(event)">
+    <label for="nome">Nome no Cartão:</label><br />
+    <input type="text" id="nome" required /><br /><br />
+
+    <label for="numero">Número do Cartão:</label><br />
+    <input type="text" id="numero" maxlength="16" required /><br /><br />
+
+    <label for="validade">Validade (MM/AA):</label><br />
+    <input type="text" id="validade" required placeholder="MM/AA" pattern="\d{2}/\d{2,4}" /><br /><br />
+
+    <label for="cvv">CVV:</label><br />
+    <input type="password" id="cvv" maxlength="3" required /><br /><br />
+
+    <button type="submit">Revisar Pedido</button>
+  </form>
+
+  <script>
+    function processarPagamento(event) {
+      event.preventDefault();
+
+      const nome = document.getElementById("nome").value;
+      const numero = document.getElementById("numero").value;
+      const validade = document.getElementById("validade").value;
+
+      if (numero.length < 16 || isNaN(numero)) {
+        alert("Número do cartão inválido!");
+        return;
+      }
+
+      if (!/^\d{2}\/\d{2}$/.test(validade)) {
+        alert("Validade inválida! Use MM/AA.");
+        return;
+      }
+
+      const dadosPagamento = {
+        nomeTitular: nome,
+        numeroCartao: "**** **** **** " + numero.slice(-4),
+        validade: validade
+      };
+
+      sessionStorage.setItem("dadosPagamento", JSON.stringify(dadosPagamento));
+      window.location.href = "revisao.html";
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Seleção de Filmes</title>
+  <link rel="stylesheet" href="stylo.css" />
+</head>
+<body>
+  <h1>Escolha seu Filme</h1>
+
+  <div class="filmes-container">
+    <div class="filme-card" onclick="abrirModal('filme1')">
+      <img src="velozes e furiosos 5.jpg" alt="Velozes e Furiosos 5" />
+      <h2>Velozes e Furiosos 5</h2>
+      <p>Duração: 2h10 | Classificação: 14 anos</p>
+    </div>
+
+    <div class="filme-card" onclick="abrirModal('filme2')">
+      <img src="kung fu panda 3.jpg" alt="Kung Fu Panda 3" />
+      <h2>Kung Fu Panda 3</h2>
+      <p>Duração: 1h35 | Classificação: Livre</p>
+    </div>
+
+    <div class="filme-card" onclick="abrirModal('filme3')">
+      <img src="duro de matar.jpg" alt="Duro de Matar" />
+      <h2>Duro de Matar</h2>
+      <p>Duração: 2h05 | Classificação: 18 anos</p>
+    </div>
+
+    <div class="filme-card" onclick="abrirModal('filme4')">
+      <img src="um espião e meio.jpg" alt="Um Espião e Meio" />
+      <h2>Um Espião e Meio</h2>
+      <p>Duração: 1h50 | Classificação: 12 anos</p>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div id="modal-filme" class="modal">
+    <div class="modal-conteudo">
+      <span class="fechar" onclick="fecharModal()">&times;</span>
+      <h2 id="titulo-filme"></h2>
+      <p id="sinopse-filme"></p>
+      <p id="horarios-filme"></p>
+      <!--<button onclick="irParaAssentos()">Selecionar Sessão</button>-->
+    </div>
+  </div>
+
+  <script src="filmes.js"></script>
+</body>
+</html>

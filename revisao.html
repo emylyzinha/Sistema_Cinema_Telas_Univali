@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Revisão Final</title>
+  <link rel="stylesheet" href="stylo.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Revisão do Pedido</h1>
+
+    <!-- Este elemento é essencial para o resumo aparecer -->
+    <div id="resumo-pedido" class="resumo-pedido"></div>
+
+    <button onclick="confirmarPedido()">Confirmar Pedido</button>
+  </div>
+
+  <script>
+   const precosCombos = {
+  pipoca: 15.00,
+  refri: 8.00,
+  combo1: 20.00,
+  mm: 12.00  // novo item
+};
+
+    const precoAssento = 20.00;
+
+    function exibirResumo() {
+      try {
+        const filmeId = sessionStorage.getItem("filmeSelecionado");
+        const sessao = sessionStorage.getItem("sessaoSelecionada") || "Não selecionada";
+        const assentos = JSON.parse(sessionStorage.getItem("assentosSelecionados") || "[]");
+        const combos = JSON.parse(sessionStorage.getItem("combosSelecionados") || "{}");
+        const pagamento = JSON.parse(sessionStorage.getItem("dadosPagamento") || "{}");
+
+        const filmes = {
+          filme1: "Velozes e Furiosos 5",
+          filme2: "Kung Fu Panda 3",
+          filme3: "Duro de Matar",
+          filme4: "Um Espião e Meio"
+        };
+
+        let total = assentos.length * precoAssento;
+
+        let combosFormatado = "";
+        for (let nome in combos) {
+          const qtd = parseInt(combos[nome]);
+          if (qtd > 0) {
+            const precoUnitario = precosCombos[nome] || 0;
+            const subtotal = precoUnitario * qtd;
+            total += subtotal;
+
+            combosFormatado += `<li>${qtd}x ${nome} (R$ ${subtotal.toFixed(2).replace('.', ',')})</li>`;
+          }
+        }
+
+        const resumoHTML = `
+          <p><strong>Filme:</strong> ${filmes[filmeId] || "Não informado"}</p>
+          <p><strong>Sessão:</strong> ${sessao}</p>
+          <p><strong>Assentos:</strong> ${assentos.join(", ")} (${assentos.length} x R$ 20,00)</p>
+          <p><strong>Combos:</strong></p>
+          <ul>${combosFormatado || "<li>Nenhum</li>"}</ul>
+          <p><strong>Total:</strong> R$ ${total.toFixed(2).replace('.', ',')}</p>
+          <p><strong>Pagamento:</strong> ${pagamento.nomeTitular || "Não informado"} - ${pagamento.numeroCartao || "****"} (Val: ${pagamento.validade || "MM/AA"})</p>
+        `;
+
+        document.getElementById("resumo-pedido").innerHTML = resumoHTML;
+
+      } catch (erro) {
+        console.error("Erro ao montar o resumo:", erro);
+        document.getElementById("resumo-pedido").innerHTML =
+          "<p style='color:red;'>Erro ao carregar os dados. Verifique se você passou pelas etapas anteriores.</p>";
+      }
+    }
+
+    function confirmarPedido() {
+      alert("Compra finalizada com sucesso! Obrigado por escolher nosso cinema.");
+      sessionStorage.clear();
+      window.location.href = "index.html";
+    }
+
+    window.onload = exibirResumo;
+  </script>
+</body>
+</html>
